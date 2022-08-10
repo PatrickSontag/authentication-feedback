@@ -31,18 +31,18 @@ class User(db.Model):
                          nullable=False)
  
 
-    # # start_register
-    # @classmethod
-    # def register(cls, username, pwd):
-    #     """Register user w/hashed password & return user."""
+    # start_register
+    @classmethod
+    def register(cls, username, pwd, email, first, last):
+        """Register user w/hashed password & return user."""
 
-    #     hashed = bcrypt.generate_password_hash(pwd)
-    #     # turn bytestring into normal (unicode utf8) string
-    #     hashed_utf8 = hashed.decode("utf8")
+        hashed = bcrypt.generate_password_hash(pwd)
+        # turn bytestring into normal (unicode utf8) string
+        hashed_utf8 = hashed.decode("utf8")
 
-    #     # return instance of user w/username and hashed pwd
-    #     return cls(username=username, password=hashed_utf8)
-    # # end_register
+        # return instance of user w/username and hashed pwd
+        return cls(username=username, password=hashed_utf8, email=email, first_name=first, last_name=last)
+    # end_register
 
     # # start_authenticate
     # @classmethod

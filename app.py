@@ -3,7 +3,7 @@
 from flask import Flask, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
-# from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
@@ -33,12 +33,15 @@ def register():
     if form.validate_on_submit():
         name = form.username.data
         pwd = form.password.data
+        email = form.email.data
+        first = form.first_name.data
+        last = form.last_name.data
 
-        user = User.register(name, pwd)
+        user = User.register(name, pwd, email, first, last)
         db.session.add(user)
         db.session.commit()
 
-        session["user_id"] = user.id
+        session["username"] = user.username
 
         # on successful login, redirect to secret page
         return redirect("/secret")
@@ -61,7 +64,7 @@ def login():
         user = User.authenticate(name, pwd)
 
         if user:
-            session["user_id"] = user.id  # keep logged in
+            session["username"] = user.username  # keep logged in
             return redirect("/secret")
 
         else:
@@ -75,7 +78,7 @@ def login():
 def secret():
     """Example hidden page for logged-in users only."""
 
-    if "user_id" not in session:
+    if "username" not in session:
         flash("You must be logged in to view!")
         return redirect("/")
 
@@ -92,6 +95,6 @@ def secret():
 def logout():
     """Logs user out and redirects to homepage."""
 
-    session.pop("user_id")
+    session.pop("username")
 
     return redirect("/")
