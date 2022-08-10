@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config["SECRET_KEY"] = "abc123"
 
 connect_db(app)
@@ -44,7 +45,7 @@ def register():
         session["username"] = user.username
 
         # on successful login, redirect to secret page
-        return redirect("/secret")
+        return redirect("/user/<username>")
 
     else:
         return render_template("register.html", form=form)
@@ -57,15 +58,15 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        name = form.username.data
+        username = form.username.data
         pwd = form.password.data
 
         # authenticate will return a user or False
-        user = User.authenticate(name, pwd)
+        user = User.authenticate(username, pwd)
 
         if user:
             session["username"] = user.username  # keep logged in
-            return redirect("/secret")
+            return redirect(f"/user/{username}")
 
         else:
             form.username.errors = ["Bad name/password"]
@@ -74,8 +75,8 @@ def login():
 # end-login
 
 
-@app.route("/secret")
-def secret():
+@app.route("/user/<username>")
+def secret(username):
     """Example hidden page for logged-in users only."""
 
     if "username" not in session:
@@ -88,7 +89,7 @@ def secret():
         # raise Unauthorized()
 
     else:
-        return render_template("secret.html")
+        return render_template("secret.html", username=username)
 
 
 @app.route("/logout")

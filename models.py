@@ -60,3 +60,22 @@ class User(db.Model):
         else:
             return False
     # end_authenticate    
+
+class Feedback(db.Model):
+    """Feedback."""
+
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer, 
+                    primary_key=True,
+                    autoincrement=True)
+    title = db.Column(db.String(100), 
+                    nullable=False)
+    content = db.Column(db.Text, 
+                    nullable=False,
+                    unique=True)
+    username = db.Column(db.Text, 
+                    db.ForeignKey('users.username'),
+                    nullable=False)
+
+    users = db.relationship('User', backref='feedback')
