@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<h1 class="display-4">You made it, {{ username }}!</h1>
+
+<img src="https://images.unsplash.com/photo-1537884944318-390069bb8665?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGNvZGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60">
+
+<form id="update-form" action="/update/{{ user.id }}" method="POST">
+    <p class="form-text t-clr-2">Username:  {{ username }}</p>
+    <p class="form-text t-clr-2">Email:  {{ user.email }}</p>
+    <p class="form-text t-clr-2">First Name:  {{ user.first_name }}</p>
+    <p class="form-text t-clr-2">Last Name:  {{ user.last_name }}</p>
+</form>
+
+{% endblock %}

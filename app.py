@@ -76,7 +76,7 @@ def login():
 
 
 @app.route("/user/<username>")
-def secret(username):
+def user(username):
     """Example hidden page for logged-in users only."""
 
     if "username" not in session:
@@ -89,7 +89,9 @@ def secret(username):
         # raise Unauthorized()
 
     else:
-        return render_template("secret.html", username=username)
+        user = User.query.get_or_404(username)
+
+        return render_template("user.html", username=username, user=user)
 
 
 @app.route("/logout")
