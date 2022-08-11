@@ -13,4 +13,8 @@
     <p class="form-text t-clr-2">Last Name:  {{ user.last_name }}</p>
 </form>
 
+<form id="delete-user-form" action="/user/{{ user.username }}/delete" method="POST">
+    <button>Remove User</button>
+</form>
+
 {% endblock %}

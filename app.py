@@ -93,6 +93,16 @@ def user(username):
 
         return render_template("user.html", username=username, user=user)
 
+@app.route("/user/<username>/delete", methods=["POST"])
+def delete_user(username):
+    """Remove user from database."""
+    session.pop("username")
+
+    user = User.query.get_or_404(username)
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/")
 
 @app.route("/logout")
 def logout():

@@ -30,6 +30,8 @@ class User(db.Model):
     last_name = db.Column(db.String(30), 
                          nullable=False)
  
+    feedbacks = db.relationship('Feedback', backref='user', cascade="all, delete-orphan")
+    
 
     # start_register
     @classmethod
@@ -78,4 +80,3 @@ class Feedback(db.Model):
                     db.ForeignKey('users.username'),
                     nullable=False)
 
-    users = db.relationship('User', backref='feedback')
