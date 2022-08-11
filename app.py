@@ -42,10 +42,12 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        flash('Successfully Created New Account')
+
         session["username"] = user.username
 
         # on successful login, redirect to secret page
-        return redirect("/user/<username>")
+        return redirect(f"/user/{user.username}")
 
     else:
         return render_template("register.html", form=form)
@@ -138,8 +140,10 @@ def edit_feedback(feedback_id):
     """Edit feedback by feedback id"""
 
     form = FeedbackForm()
-    # user = User.query.get_or_404(username)
+    username = session["username"]
+    print("session['username']", username)
+    user = User.query.get_or_404(username)
 
-    return render_template("feedback.html", form=form)
-    # return render_template("feedback.html", form=form, user=user)
+    # return render_template("feedback.html", form=form)
+    return render_template("feedback.html", form=form, user=user)
 

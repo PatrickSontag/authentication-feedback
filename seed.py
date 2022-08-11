@@ -11,10 +11,10 @@ nate = User.register("natethegreat", "tickles", "nnickerson@dundermifflin.com", 
 charles = User.register("chuck99", "jakeandcharles", "charles@99.com", "Charles", "Boyle")
 ron = User.register("RonSwanson", "password", "RonSwanson@Pawnee.gov", "Ron", "Swanson")
 
-f1 = Feedback(title="Ryan vs Ravi", content="I've never met Ravi personally, but I'm gonna go ahead and say just having known you a short while, Brian, that I prefer Ravi.  And again, I've never even met the guy.", username="natethegreat")
-f2 = Feedback(title="Influence", content="I've never been a bad influence on anyone.", username="chuck99")
-f3 = Feedback(title="Hello", content="All the eggs and bacon.", username="RonSwanson")
-f4 = Feedback(title="Gloves", content="Thanks Daryl.", username="natethegreat")
+f1 = Feedback(title="Ryan vs Ravi", content="I've never met Ravi personally, but I'm gonna go ahead and say just having known you a short while, Brian, that I prefer Ravi.  And again, I've never even met the guy.", user_id="natethegreat")
+f2 = Feedback(title="Influence", content="I've never been a bad influence on anyone.", user_id="chuck99")
+f3 = Feedback(title="Hello", content="All the eggs and bacon.", user_id="RonSwanson")
+f4 = Feedback(title="Gloves", content="Thanks Daryl.", user_id="natethegreat")
 
 # Add users to db session and commit
 db.session.add(nate)

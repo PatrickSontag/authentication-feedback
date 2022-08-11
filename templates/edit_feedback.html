@@ -14,6 +14,8 @@
     <p>
       {{ field.label }}
       {{ field(class_="form-control") }}
+      <input class="tag-input" type="checkbox" name="tags" id="tag{{ tag.id }}" value="{{ tag.id }}" 
+
   
       {% for error in field.errors %}
       {{ error }}

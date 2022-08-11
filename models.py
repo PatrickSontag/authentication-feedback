@@ -75,7 +75,7 @@ class Feedback(db.Model):
                     nullable=False)
     content = db.Column(db.Text, 
                     nullable=False)
-    username = db.Column(db.Text, 
+    user_id = db.Column(db.Text, 
                     db.ForeignKey('users.username'),
                     nullable=False)
 
