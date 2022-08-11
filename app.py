@@ -2,8 +2,8 @@
 
 from flask import Flask, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, User
-from forms import RegisterForm, LoginForm
+from models import connect_db, db, User, Feedback
+from forms import RegisterForm, LoginForm, FeedbackForm
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
@@ -111,3 +111,17 @@ def logout():
     session.pop("username")
 
     return redirect("/")
+
+@app.route("/user/<username>/feedback/add", methods=["GET", "POST"])
+def add_feedback(username):
+    """Add feedback to database."""
+
+    form = FeedbackForm()
+    user = User.query.get_or_404(username)
+
+    if form.validate_on_submit():
+        return redirect ("/user/<username>")
+    
+
+    return render_template("feedback.html", form=form, user=user)
+

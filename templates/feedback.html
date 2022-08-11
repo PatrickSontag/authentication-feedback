@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="display-4">Feedback</h1>
+<p class="lead">Give some feedback.</p>
+
+<form action="/user/{{ user.username }}/feedback/add" method="POST">
+
+  <p>
+    {{ user.username }}
+  </p>
+  <p>
+    Feedback:
+  </p>
+  <textarea class="feedback-input" name="content" ></textarea>
+  <button type="submit">Submit</button>
+
+</form>
+
+{% endblock %}

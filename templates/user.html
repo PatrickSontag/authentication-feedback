@@ -16,5 +16,8 @@
 <form id="delete-user-form" action="/user/{{ user.username }}/delete" method="POST">
     <button>Remove User</button>
 </form>
+<form id="user-feedback-form" action="/user/{{ user.username }}/feedback/add" method="GET">
+    <button>Add Feedback</button>
+</form>
 
 {% endblock %}
