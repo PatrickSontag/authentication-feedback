@@ -165,3 +165,13 @@ def update_feedback(feedback_id):
 
     return redirect (f"/user/{user_id}")
 
+@app.route("/feedback/<feedback_id>/delete", methods=["POST"])
+def delete_feedback(feedback_id):
+    """Delete feedback"""
+    feedback = Feedback.query.get(feedback_id)
+    db.session.delete(feedback)
+    db.session.commit()
+    username = session["username"]
+
+    return redirect (f"/user/{username}")
+
