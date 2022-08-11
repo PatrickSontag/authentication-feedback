@@ -1,10 +1,12 @@
+
+
 {% extends 'base.html' %}
 {% block content %}
 
 <h1 class="display-4">Feedback</h1>
 <p class="lead">Give some feedback.</p>
 
-<form action="/user/{{ user.username }}/feedback/add" method="POST">
+<form action="/feedback/{{ feedback_id }}/update" method="POST">
 
   <p>
     {{ user.username }}
@@ -14,8 +16,6 @@
     <p>
       {{ field.label }}
       {{ field(class_="form-control") }}
-      <input class="tag-input" type="checkbox" name="tags" id="tag{{ tag.id }}" value="{{ tag.id }}" 
-
   
       {% for error in field.errors %}
       {{ error }}
@@ -26,7 +26,7 @@
     Feedback:
   </p>
   <textarea class="feedback-input" name="content" ></textarea> -->
-  <button type="submit">Submit</button>
+  <button type="submit">Update</button>
 
 </form>
 

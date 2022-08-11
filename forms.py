@@ -25,4 +25,4 @@ class FeedbackForm(FlaskForm):
 
     # username = StringField("Username", validators=[InputRequired()])
     title = StringField("Title", validators=[InputRequired()])
-    feedback = TextAreaField("Feedback", validators=[InputRequired()])
+    content = TextAreaField("Feedback", validators=[InputRequired()])

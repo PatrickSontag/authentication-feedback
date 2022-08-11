@@ -88,7 +88,7 @@ def user(username):
 
     else:
         user = User.query.get_or_404(username)
-        feedback = Feedback.query.filter_by(username=username)
+        feedback = Feedback.query.filter_by(user_id=username)
 
         return render_template("user.html", username=username, user=user, feedback=feedback)
 
@@ -127,7 +127,7 @@ def add_feedback(username):
     form = FeedbackForm()
 
     title = form.title.data
-    feedback = form.feedback.data
+    feedback = form.content.data
 
     feedback = Feedback(title=title, content=feedback, username=username)
     db.session.add(feedback)
@@ -138,12 +138,30 @@ def add_feedback(username):
 @app.route("/feedback/<feedback_id>/update", methods=["GET"])
 def edit_feedback(feedback_id):
     """Edit feedback by feedback id"""
+    feedback = Feedback.query.get_or_404(feedback_id)
+    form = FeedbackForm(obj=feedback)
 
-    form = FeedbackForm()
     username = session["username"]
-    print("session['username']", username)
     user = User.query.get_or_404(username)
 
     # return render_template("feedback.html", form=form)
-    return render_template("feedback.html", form=form, user=user)
+    return render_template("edit_feedback.html", form=form, user=user, feedback_id=feedback_id)
+
+@app.route("/feedback/<feedback_id>/update", methods=["POST"])
+def update_feedback(feedback_id):
+    """Update feedback"""
+    form = FeedbackForm()
+
+    title = form.title.data
+    feedback = form.content.data
+    user_id = session["username"]
+
+    old = Feedback.query.get(feedback_id)
+    db.session.delete(old)
+
+    fb = Feedback(title=title, content=feedback, user_id=user_id)
+    db.session.add(fb)
+    db.session.commit()
+
+    return redirect (f"/user/{user_id}")
 
