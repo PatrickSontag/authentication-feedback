@@ -74,8 +74,7 @@ class Feedback(db.Model):
     title = db.Column(db.String(100), 
                     nullable=False)
     content = db.Column(db.Text, 
-                    nullable=False,
-                    unique=True)
+                    nullable=False)
     username = db.Column(db.Text, 
                     db.ForeignKey('users.username'),
                     nullable=False)

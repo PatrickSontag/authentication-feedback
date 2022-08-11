@@ -19,5 +19,16 @@
 <form id="user-feedback-form" action="/user/{{ user.username }}/feedback/add" method="GET">
     <button>Add Feedback</button>
 </form>
+<br>
+    {% for fb in feedback %}
+    <div>
+        {{ fb.title }}
+    </div>
+    <p>
+        {{ fb.content }}
+    </p>
+    <button formaction="/feedback/{{ feedback.id }}/update" class="b-clr-2">Edit</button>
+    <br><br>
+    {% endfor %}
 
 {% endblock %}

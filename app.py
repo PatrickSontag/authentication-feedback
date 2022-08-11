@@ -83,15 +83,12 @@ def user(username):
         flash("You must be logged in to view!")
         return redirect("/")
 
-        # alternatively, can return HTTP Unauthorized status:
-        #
-        # from werkzeug.exceptions import Unauthorized
-        # raise Unauthorized()
 
     else:
         user = User.query.get_or_404(username)
+        feedback = Feedback.query.filter_by(username=username)
 
-        return render_template("user.html", username=username, user=user)
+        return render_template("user.html", username=username, user=user, feedback=feedback)
 
 @app.route("/user/<username>/delete", methods=["POST"])
 def delete_user(username):
@@ -112,16 +109,37 @@ def logout():
 
     return redirect("/")
 
-@app.route("/user/<username>/feedback/add", methods=["GET", "POST"])
-def add_feedback(username):
+@app.route("/user/<username>/feedback/add", methods=["GET"])
+def add_feedback_form(username):
     """Add feedback to database."""
 
     form = FeedbackForm()
     user = User.query.get_or_404(username)
-
-    if form.validate_on_submit():
-        return redirect ("/user/<username>")
     
 
     return render_template("feedback.html", form=form, user=user)
+
+@app.route("/user/<username>/feedback/add", methods=["POST"])
+def add_feedback(username):
+    """Add feedback to database."""
+    form = FeedbackForm()
+
+    title = form.title.data
+    feedback = form.feedback.data
+
+    feedback = Feedback(title=title, content=feedback, username=username)
+    db.session.add(feedback)
+    db.session.commit()
+
+    return redirect (f"/user/{username}")
+
+@app.route("/feedback/<feedback_id>/update", methods=["GET"])
+def edit_feedback(feedback_id):
+    """Edit feedback by feedback id"""
+
+    form = FeedbackForm()
+    # user = User.query.get_or_404(username)
+
+    return render_template("feedback.html", form=form)
+    # return render_template("feedback.html", form=form, user=user)
 
